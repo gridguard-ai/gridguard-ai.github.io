@@ -6,11 +6,9 @@ import { BRAND, FOOTER, NAV_LINKS } from '../utils/constants'
  */
 function Footer() {
   return (
-    <footer className="relative overflow-hidden" role="contentinfo">
-      {/* Rich gradient background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-light via-dark to-brown-dark" />
-        {/* Decorative elements */}
+    <footer className="relative overflow-hidden bg-gradient-to-b from-dark-light via-dark to-brown-dark" role="contentinfo">
+      {/* Decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute top-0 right-1/4 w-[200px] h-[200px] bg-eco/5 rounded-full blur-3xl" />
       </div>
