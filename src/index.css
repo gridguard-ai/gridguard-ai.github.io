@@ -1,0 +1,205 @@
+/* Tailwind CSS Imports */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   CSS Custom Properties (Brand Colors)
+   ======================================== */
+:root {
+  /* Primary Colors - Warm Orange */
+  --color-primary: #D97706;
+  --color-primary-light: #F59E0B;
+  --color-primary-dark: #B45309;
+  
+  /* Brown Colors */
+  --color-brown: #78350F;
+  --color-brown-light: #92400E;
+  --color-brown-dark: #451A03;
+  
+  /* Eco Green Colors */
+  --color-eco: #059669;
+  --color-eco-light: #10B981;
+  --color-eco-dark: #047857;
+  
+  /* Dark Colors - Warm tones */
+  --color-dark: #1C1917;
+  --color-dark-light: #292524;
+  
+  /* Soft/Light Colors - Warm white */
+  --color-soft: #FAFAF9;
+  --color-soft-dark: #F5F5F4;
+  
+  /* Spacing Scale */
+  --spacing-section: 5rem;
+  --spacing-section-mobile: 3rem;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--color-soft);
+    color: var(--color-dark);
+    line-height: 1.6;
+  }
+  
+  /* Display font for headings */
+  h1, h2, h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+  
+  /* Focus visible styles for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  
+  /* Remove default focus outline (we use focus-visible instead) */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+/* ========================================
+   Component Styles
+   ======================================== */
+@layer components {
+  /* Primary Button - Orange with gradient */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 
+           bg-gradient-to-r from-primary to-primary-dark text-white font-semibold rounded-full
+           transition-all duration-200 ease-out
+           hover:from-primary-light hover:to-primary hover:shadow-lg hover:shadow-primary/25
+           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+           active:scale-[0.98];
+  }
+  
+  /* Secondary Button (Outline) - Brown accent */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 
+           bg-transparent text-dark font-semibold rounded-full
+           border-2 border-brown/30
+           transition-all duration-200 ease-out
+           hover:bg-brown hover:text-soft hover:border-brown
+           focus:outline-none focus:ring-2 focus:ring-brown focus:ring-offset-2
+           active:scale-[0.98];
+  }
+  
+  /* Eco Button variant */
+  .btn-eco {
+    @apply inline-flex items-center justify-center px-6 py-3 
+           bg-gradient-to-r from-eco to-eco-dark text-white font-semibold rounded-full
+           transition-all duration-200 ease-out
+           hover:from-eco-light hover:to-eco hover:shadow-lg hover:shadow-eco/25
+           focus:outline-none focus:ring-2 focus:ring-eco focus:ring-offset-2
+           active:scale-[0.98];
+  }
+  
+  /* Section container with consistent max-width and padding */
+  .section-container {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Section with vertical padding */
+  .section-padding {
+    @apply py-16 md:py-20 lg:py-24;
+  }
+  
+  /* Card style with brand colors */
+  .card {
+    @apply bg-white rounded-2xl p-6 shadow-sm 
+           border border-soft-dark/30
+           transition-all duration-300
+           hover:shadow-lg hover:shadow-primary/5;
+  }
+  
+  /* Gradient text effect for brand colors */
+  .text-gradient-brand {
+    @apply bg-gradient-to-r from-primary via-eco to-brown bg-clip-text text-transparent;
+  }
+}
+
+/* ========================================
+   Utility Styles
+   ======================================== */
+@layer utilities {
+  /* Scroll-triggered fade-in animation */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Stagger delay utilities for sequential animations */
+  .delay-100 { transition-delay: 100ms; }
+  .delay-200 { transition-delay: 200ms; }
+  .delay-300 { transition-delay: 300ms; }
+  .delay-400 { transition-delay: 400ms; }
+  
+  /* Text gradient effect */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent;
+  }
+  
+  /* Screen reader only (but visible on focus) */
+  .sr-only-focusable:focus {
+    @apply not-sr-only absolute top-4 left-4 z-50 
+           bg-primary text-dark px-4 py-2 rounded-lg;
+  }
+}
+
+/* ========================================
+   Custom Scrollbar (Optional Enhancement)
+   ======================================== */
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--color-soft);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-dark-light);
+    border-radius: 5px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-dark);
+  }
+}
+
+/* ========================================
+   Reduced Motion Support
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
