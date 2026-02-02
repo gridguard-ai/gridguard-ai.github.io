@@ -82,13 +82,11 @@ function CTABar() {
     <section
       id="cta"
       ref={sectionRef}
-      className="section-padding relative overflow-hidden"
+      className="section-padding relative overflow-hidden bg-gradient-to-br from-brown-dark via-dark to-dark-light"
       aria-labelledby="cta-heading"
     >
-      {/* Rich gradient background with brand colors */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-brown-dark via-dark to-dark-light" />
-        {/* Decorative gradient orbs */}
+      {/* Decorative gradient orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-primary/15 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-eco/10 rounded-full blur-3xl translate-x-1/4 translate-y-1/4" />
         <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-brown/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />

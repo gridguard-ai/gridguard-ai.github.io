@@ -32,13 +32,11 @@ function HowItWorks() {
     <section
       id="how-it-works"
       ref={sectionRef}
-      className="section-padding relative overflow-hidden"
+      className="section-padding relative overflow-hidden bg-gradient-to-br from-dark via-dark-light to-brown-dark"
       aria-labelledby="how-it-works-heading"
     >
-      {/* Rich gradient background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-dark via-dark-light to-brown-dark" />
-        {/* Decorative gradient orbs */}
+      {/* Decorative gradient orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-eco/10 rounded-full blur-3xl" />
         {/* Subtle pattern overlay */}
