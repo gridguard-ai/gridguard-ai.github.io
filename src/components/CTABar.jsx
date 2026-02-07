@@ -1,17 +1,12 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { CTA } from '../utils/constants';
 
 /**
  * CTA Bar Component
- * Email capture form with client-side validation
- * Shows success/error states without backend integration
+ * Links to external feedback survey form
  */
 function CTABar() {
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState('idle') // idle | loading | success | error
-  const [errorMessage, setErrorMessage] = useState('')
   const sectionRef = useRef(null)
-  const inputRef = useRef(null)
 
   // Intersection Observer for scroll animations
   useEffect(() => {
@@ -31,52 +26,6 @@ function CTABar() {
 
     return () => observer.disconnect()
   }, [])
-
-  // Validate email format
-  const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return emailRegex.test(email)
-  }
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    // Validate email
-    if (!email.trim()) {
-      setStatus('error')
-      setErrorMessage('Please enter your email address.')
-      inputRef.current?.focus()
-      return
-    }
-
-    if (!isValidEmail(email)) {
-      setStatus('error')
-      setErrorMessage(CTA.errorMessage)
-      inputRef.current?.focus()
-      return
-    }
-
-    // Simulate API call (no backend)
-    setStatus('loading')
-
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 800))
-
-    // Success!
-    setStatus('success')
-    setEmail('')
-  }
-
-  // Reset form after showing success
-  useEffect(() => {
-    if (status === 'success') {
-      const timer = setTimeout(() => {
-        setStatus('idle')
-      }, 5000)
-      return () => clearTimeout(timer)
-    }
-  }, [status]);
 
   return (
     <section
@@ -104,7 +53,7 @@ function CTABar() {
         <div className="max-w-2xl mx-auto text-center animate-on-scroll">
           {/* Badge */}
           <span className="inline-block px-4 py-2 bg-primary/20 text-primary-light font-semibold text-sm rounded-full mb-6">
-            Early Access
+            {CTA.badge}
           </span>
 
           {/* Heading */}
@@ -116,78 +65,22 @@ function CTABar() {
           </h2>
           <p className="mt-4 text-lg text-soft/70">{CTA.subheadline}</p>
 
-          {/* Email Form */}
-          {status === 'success' ? (
-            <SuccessMessage message={CTA.successMessage} />
-          ) : (
-            <form
-              onSubmit={handleSubmit}
-              className="mt-8"
-              noValidate
+          {/* Survey Link Button */}
+          <div className="mt-8">
+            <a
+              href={CTA.formUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary px-10 py-4 text-lg shadow-lg shadow-primary/30 inline-flex items-center gap-3"
             >
-              <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-                <div className="flex-1 relative">
-                  <label htmlFor="email-input" className="sr-only">
-                    Email address
-                  </label>
-                  <input
-                    ref={inputRef}
-                    id="email-input"
-                    type="email"
-                    name="email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value)
-                      if (status === 'error') setStatus('idle')
-                    }}
-                    placeholder={CTA.placeholder}
-                    className={`w-full px-5 py-4 rounded-full bg-white/10 backdrop-blur-sm text-soft placeholder-soft/50 border-2 transition-all duration-300 focus:outline-none focus:ring-0 ${
-                      status === 'error'
-                        ? 'border-red-500 focus:border-red-500'
-                        : 'border-white/20 focus:border-primary focus:bg-white/15'
-                    }`}
-                    aria-invalid={status === 'error'}
-                    aria-describedby={status === 'error' ? 'email-error' : undefined}
-                    disabled={status === 'loading'}
-                    autoComplete="email"
-                  />
-                  {/* Email icon */}
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <EmailIcon className="w-5 h-5 text-soft/40" />
-                  </div>
-                </div>
+              <SurveyIcon className="w-5 h-5" />
+              {CTA.buttonText}
+              <ExternalLinkIcon className="w-4 h-4" />
+            </a>
+          </div>
 
-                <button
-                  type="submit"
-                  disabled={status === 'loading'}
-                  className="btn-primary px-8 py-4 text-lg shadow-lg shadow-primary/30 disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                  {status === 'loading' ? (
-                    <span className="flex items-center gap-2">
-                      <LoadingSpinner />
-                      Submitting...
-                    </span>
-                  ) : (
-                    CTA.buttonText
-                  )}
-                </button>
-              </div>
-
-              {/* Error Message */}
-              {status === 'error' && (
-                <p
-                  id="email-error"
-                  className="mt-3 text-red-400 text-sm"
-                  role="alert"
-                >
-                  {errorMessage}
-                </p>
-              )}
-
-              {/* Privacy Note */}
-              <p className="mt-4 text-sm text-soft/50">{CTA.privacyNote}</p>
-            </form>
-          )}
+          {/* Note */}
+          <p className="mt-6 text-sm text-soft/50">{CTA.note}</p>
         </div>
       </div>
     </section>
@@ -195,25 +88,9 @@ function CTABar() {
 }
 
 /**
- * Success Message Component
+ * Survey Icon
  */
-function SuccessMessage({ message }) {
-  return (
-    <div className="mt-8 p-6 bg-gradient-to-r from-eco/20 to-eco/10 rounded-2xl animate-fade-in border border-eco/30">
-      <div className="flex items-center justify-center gap-3">
-        <div className="w-12 h-12 bg-gradient-to-br from-eco to-eco-dark rounded-full flex items-center justify-center shadow-lg shadow-eco/30">
-          <CheckIcon className="w-6 h-6 text-white" />
-        </div>
-        <p className="text-lg font-medium text-soft">{message}</p>
-      </div>
-    </div>
-  )
-}
-
-/**
- * Email Icon
- */
-function EmailIcon({ className }) {
+function SurveyIcon({ className }) {
   return (
     <svg
       className={className}
@@ -226,16 +103,16 @@ function EmailIcon({ className }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
-        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
       />
     </svg>
   )
 }
 
 /**
- * Check Icon
+ * External Link Icon
  */
-function CheckIcon({ className }) {
+function ExternalLinkIcon({ className }) {
   return (
     <svg
       className={className}
@@ -248,35 +125,7 @@ function CheckIcon({ className }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
-        d="M5 13l4 4L19 7"
-      />
-    </svg>
-  )
-}
-
-/**
- * Loading Spinner
- */
-function LoadingSpinner() {
-  return (
-    <svg
-      className="animate-spin w-5 h-5"
-      fill="none"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
       />
     </svg>
   )

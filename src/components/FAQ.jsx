@@ -110,7 +110,7 @@ function FAQ() {
         </div>
 
         {/* Accordion */}
-        <div className="max-w-3xl mx-auto space-y-4" role="list">
+        <div className="max-w-3xl mx-auto space-y-4 animate-on-scroll" role="list">
           {FAQ_DATA.items.map((item, index) => (
             <AccordionItem
               key={item.id}
@@ -146,8 +146,7 @@ function AccordionItem({ item, index, isOpen, onToggle, onKeyDown, buttonRef }) 
 
   return (
     <div
-      className={`animate-on-scroll border-2 ${color.border} ${color.hoverBorder} rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? 'shadow-lg' : 'shadow-sm'}`}
-      style={{ transitionDelay: `${index * 50}ms` }}
+      className={`border-2 ${color.border} ${color.hoverBorder} rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? 'shadow-lg' : 'shadow-sm'}`}
       role="listitem"
     >
       {/* Accordion Header/Button */}

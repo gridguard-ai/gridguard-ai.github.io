@@ -18,7 +18,7 @@ export const BRAND = {
 // ========================================
 export const IMAGES = {
   heroProduct: '/assets/placeholder-product.svg',
-  heroBg: '/assets/newyorkoutage.webp',
+  heroBg: '/assets/newyorkoutage_enchanced.jpg',
 };
 
 // ========================================
@@ -142,13 +142,12 @@ export const FAQ = {
 // CTA Section
 // ========================================
 export const CTA = {
-  headline: 'Be the First to Know',
-  subheadline: 'Join our waitlist for exclusive early access and launch pricing.',
-  placeholder: 'Enter your email',
-  buttonText: 'Notify Me',
-  successMessage: 'Thanks! We\'ll keep you updated.',
-  errorMessage: 'Please enter a valid email address.',
-  privacyNote: 'We respect your privacy. Unsubscribe anytime.',
+  badge: 'Quick Feedback',
+  headline: 'Help Shape GridGuard',
+  subheadline: 'Take our quick survey and help us build the backup power solution you need.',
+  buttonText: 'Take the Survey',
+  formUrl: 'https://forms.fillout.com/t/cZ91LeNhM8us',
+  note: 'Takes less than 2 minutes. Your feedback helps us build a better product.',
 };
 
 // ========================================

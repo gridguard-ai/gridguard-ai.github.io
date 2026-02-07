@@ -22,7 +22,7 @@ function App() {
         <Specs />
         <FAQ />
         <CTABar />
-      </main>
+      </main> 
       <Footer />
     </div>
   )
